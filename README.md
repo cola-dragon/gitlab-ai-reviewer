@@ -1,5 +1,11 @@
 # GitLab AI Reviewer
 
+[![Release](https://img.shields.io/github/v/release/cola-dragon/gitlab-ai-reviewer?style=flat-square)](https://github.com/cola-dragon/gitlab-ai-reviewer/releases)
+[![License](https://img.shields.io/github/license/cola-dragon/gitlab-ai-reviewer?style=flat-square)](./LICENSE)
+![Python](https://img.shields.io/badge/python-3.13%20tested-3776AB?style=flat-square&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/deploy-Docker%20Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
+![OpenAI Compatible](https://img.shields.io/badge/model-OpenAI%20Compatible-6C47FF?style=flat-square)
+
 [简体中文 README](README.zh-CN.md) | [English README](README.en.md)
 
 An AI-powered reviewer service for GitLab Merge Requests that turns webhook events into structured review output, summary comments, and inline feedback directly inside the MR discussion flow.
