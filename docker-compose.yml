@@ -1,0 +1,16 @@
+services:
+  reviewer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gitlab-ai-reviewer
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # 改这里就能直接开关自动 MR review：true 开，false 关
+      AUTO_REVIEW_ENABLED: 'true'
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./prompts:/app/prompts:ro

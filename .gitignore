@@ -1,0 +1,9 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+.env
+.ace-tool/
+dist/
+.spec-workflow/
+docs/superpowers/
