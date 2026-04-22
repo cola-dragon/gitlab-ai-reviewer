@@ -125,7 +125,8 @@ def create_app(
                     _diag(f'current username resolved: {trigger_username}')
                 except Exception as exc:
                     _diag(f'current username resolve failed: {type(exc).__name__}: {exc}')
-                    raise
+                    _diag('manual review skipped: current_username_unavailable')
+                    return {'accepted': False}
                 matched = should_trigger_manual_review(event, ai_username=trigger_username)
                 _diag(
                     f'manual review match: mr_iid={event.merge_request_iid} '
