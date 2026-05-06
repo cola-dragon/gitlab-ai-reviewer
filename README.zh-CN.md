@@ -20,7 +20,8 @@
 - 支持 **总评评论 + 行级评论**
 - 支持 **Docker Compose 一键部署**
 - 支持 **OpenAI 兼容接口**
-- 支持 **外挂 prompts**，无需重建镜像即可调整评审提示词
+- 支持 **外挂 prompts**，无需重建镜像即可调整评审提示词（主提示词集中在 `prompts/review.md`）
+- 支持 **review 前自动拉取被审项目的 README、CONTRIBUTING、`docs/` 等 markdown 文档**作为 LLM 上下文
 - 内置测试与本地联调文档，便于二次开发
 
 ### 你会得到什么
@@ -199,9 +200,10 @@ GITLAB_TOKEN=...
 2. 服务校验 `X-Gitlab-Token`
 3. 根据事件判断是否需要触发 review
 4. 拉取 MR changes、commits、commit diff、MR version
-5. 构建 review payload
-6. 调用大模型生成结构化评审结果
-7. 先更新总评评论，再尝试创建行级评论
+5. 拉取被审项目仓库中的 README、CONTRIBUTING、`docs/` 等 markdown 文档（默认开启，可通过 `PROJECT_DOCS_ENABLED=false` 关闭）
+6. 构建 review payload
+7. 调用大模型生成结构化评审结果
+8. 先更新总评评论，再尝试创建行级评论
 
 详细技术说明见：[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 

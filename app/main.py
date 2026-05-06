@@ -30,7 +30,14 @@ def build_dependencies(settings: Settings):
         api_style=settings.openai_api_style,
         structured_output_mode=settings.openai_structured_output_mode,
     )
-    review_worker = ReviewWorker(gitlab_client=gitlab_client, llm_client=llm_client)
+    review_worker = ReviewWorker(
+        gitlab_client=gitlab_client,
+        llm_client=llm_client,
+        project_docs_enabled=settings.project_docs_enabled,
+        project_docs_max_files=settings.project_docs_max_files,
+        project_docs_max_bytes_per_file=settings.project_docs_max_bytes_per_file,
+        project_docs_max_total_bytes=settings.project_docs_max_total_bytes,
+    )
     queue_manager = ReviewQueueManager(worker=review_worker.run)
     review_service = ReviewService(gitlab_client=gitlab_client, queue_manager=queue_manager)
     return review_service, queue_manager, gitlab_client

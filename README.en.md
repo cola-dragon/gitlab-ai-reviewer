@@ -20,7 +20,8 @@ It receives GitLab webhooks, loads MR diffs and commit history, calls an OpenAI-
 - **Summary comment + inline comments**
 - **Docker Compose friendly**
 - **Works with OpenAI-compatible gateways**
-- **Prompt files can be mounted and customized**
+- **Prompt files can be mounted and customized** (the main prompt lives in `prompts/review.md`)
+- **Pulls the target project's README, CONTRIBUTING, `docs/` markdown** as extra LLM context before review
 - **Includes tests and local debugging docs**
 
 ### What you get
@@ -200,9 +201,10 @@ High-level flow:
 2. The service validates `X-Gitlab-Token`
 3. The webhook handler decides whether a review should start
 4. The service loads MR changes, commits, commit diffs, and the latest MR version
-5. A review payload is built for the LLM
-6. The LLM returns structured review output
-7. The service updates the summary comment and attempts inline discussions
+5. The service pulls the target project's README, CONTRIBUTING, and `docs/` markdown as extra context (enabled by default; disable with `PROJECT_DOCS_ENABLED=false`)
+6. A review payload is built for the LLM
+7. The LLM returns structured review output
+8. The service updates the summary comment and attempts inline discussions
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for module-level details.
 

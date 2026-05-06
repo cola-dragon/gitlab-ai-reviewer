@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from urllib.parse import quote
+
 import httpx
 
 
@@ -132,6 +134,40 @@ class GitLabClient:
                 data=payload,
             )
             response.raise_for_status()
+
+    async def list_repository_tree(self, project_id: int, ref: str) -> list[dict]:
+        # 递归列出指定 ref 下的全部仓库树条目，分页拉全
+        url = f'{self._base_url}/api/v4/projects/{project_id}/repository/tree'
+        items: list[dict] = []
+        page = 1
+        async with httpx.AsyncClient(timeout=self._timeout, headers=self._headers, verify=False) as client:
+            while True:
+                response = await client.get(
+                    url,
+                    params={'recursive': 'true', 'ref': ref, 'per_page': 100, 'page': page},
+                )
+                response.raise_for_status()
+                payload = response.json()
+                if not isinstance(payload, list):
+                    raise ValueError(f'expected list payload from {url}')
+                items.extend(payload)
+                next_page = response.headers.get('X-Next-Page', '')
+                if not next_page:
+                    break
+                page = int(next_page)
+        _diag(f'gitlab list_repository_tree: project_id={project_id} ref={ref} items={len(items)}')
+        return items
+
+    async def get_repository_file_raw(self, project_id: int, file_path: str, ref: str) -> str:
+        # GitLab Repository Files API 要求路径段做 URL 编码（保留 / 也要编码）
+        encoded_path = quote(file_path, safe='')
+        url = f'{self._base_url}/api/v4/projects/{project_id}/repository/files/{encoded_path}/raw'
+        async with httpx.AsyncClient(timeout=self._timeout, headers=self._headers, verify=False) as client:
+            response = await client.get(url, params={'ref': ref})
+            response.raise_for_status()
+            text = response.text
+        _diag(f'gitlab get_repository_file_raw: path={file_path} ref={ref} bytes={len(text.encode("utf-8"))}')
+        return text
 
     @staticmethod
     def _to_file_change(item: dict) -> FileChange:

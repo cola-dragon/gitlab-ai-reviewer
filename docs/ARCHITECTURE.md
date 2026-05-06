@@ -60,6 +60,7 @@ The worker fetches:
 - MR commit list
 - per-commit diffs
 - latest MR version metadata
+- project docs（被审项目仓库根目录与 `docs/` 下的 markdown 文档，作为 LLM 上下文；可通过 `PROJECT_DOCS_ENABLED` 等环境变量控制开关与上限）
 
 These inputs are combined into a structured review payload for the model.
 

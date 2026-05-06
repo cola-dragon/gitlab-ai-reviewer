@@ -3,6 +3,12 @@
 输入数据中：
 - `meta`：MR 总文件数、总提交数
 - `files`：每个变更文件的最终 diff 与该文件在 MR 内的提交历史摘要（已压缩，不包含原始历史 diff 文本）
+- `project_docs`：被审项目仓库中的 markdown 文档（README/CONTRIBUTING/docs 等），用于理解项目背景与团队规范；可能按字节截断（`truncated=true`），可能为空数组
+
+审查前置：
+- 先快速浏览 `project_docs`，建立对项目领域、用户、技术栈与既有约定的认知
+- 然后再审查 diff，让结论贴合该项目的实际语境
+- 项目文档与 diff 冲突时，以 diff 为事实依据，可在结论中提示“与项目文档不一致”
 
 审查要求：
 1. 审查所有 changed files，包括新增、修改、删除、重命名文件。
