@@ -160,6 +160,8 @@ OpenAI-compatible structured output client.
 
 Loads prompt files from the configured prompt directory.
 
+主 prompt 位于 `prompts/review.md`（使用者主要在这里定制审查口径）；系统提示与暂未启用的预留模板（`system.md`、`chunk_review.md`、`final_summary.md`）位于 `prompts/extras/`。
+
 ### `app/queue_manager.py`
 
 Serializes review execution and exposes queue depth to health checks.

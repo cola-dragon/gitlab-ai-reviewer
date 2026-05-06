@@ -24,7 +24,7 @@ def build_dependencies(settings: Settings):
         base_url=settings.openai_base_url,
         api_key=settings.openai_api_key,
         model=settings.openai_model,
-        system_prompt=prompt_loader.load('system.md'),
+        system_prompt=prompt_loader.load('extras/system.md'),
         review_prompt=prompt_loader.load('review.md'),
         timeout=settings.request_timeout_seconds,
         api_style=settings.openai_api_style,

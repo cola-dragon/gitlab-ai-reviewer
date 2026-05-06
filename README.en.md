@@ -282,6 +282,8 @@ docker compose up -d --build
 docker compose restart reviewer
 ```
 
+> The main prompt lives in `prompts/review.md` — that is usually the only file you need to customize. The system prompt and reserved templates (`system.md`, `chunk_review.md`, `final_summary.md`) live under `prompts/extras/`.
+
 ---
 
 ## FAQ

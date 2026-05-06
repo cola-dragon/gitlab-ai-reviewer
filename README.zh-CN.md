@@ -281,6 +281,8 @@ docker compose up -d --build
 docker compose restart reviewer
 ```
 
+> 主提示词集中在 `prompts/review.md`，使用者通常只需修改这一个文件。系统提示与未启用的预留模板（`system.md`、`chunk_review.md`、`final_summary.md`）位于 `prompts/extras/`。
+
 ---
 
 ## FAQ / 常见问题
